@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#fff7dc">
+  <meta name="description" content="Unas flores pequeñas, hechas especialmente para ti.">
+  <title>Flores para ti</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='20' r='10' fill='%23f6bd45'/%3E%3Ccircle cx='20' cy='28' r='10' fill='%23ee7187'/%3E%3Ccircle cx='44' cy='28' r='10' fill='%23ee7187'/%3E%3Ccircle cx='24' cy='42' r='10' fill='%23ee7187'/%3E%3Ccircle cx='40' cy='42' r='10' fill='%23ee7187'/%3E%3C/svg%3E">
+  <style>
+    :root{--paper:#fff7dc;--ink:#3f4e63;--blue:#6e9ccd;--blue-dark:#4673a5;--pink:#e86f8a;--green:#67995e}
+    *{box-sizing:border-box}
+    body{margin:0;min-height:100vh;display:grid;place-items:center;padding:20px;background:#e9d8ad;color:var(--ink);font-family:"Comic Sans MS","Segoe Print",cursive}
+    .paper{position:relative;width:min(100%,560px);min-height:min(760px,calc(100vh - 40px));overflow:hidden;padding:34px 24px 28px;background:radial-gradient(circle at 13% 18%,rgba(244,187,72,.19) 0 4px,transparent 5px),radial-gradient(circle at 87% 31%,rgba(232,111,138,.16) 0 5px,transparent 6px),radial-gradient(circle at 76% 74%,rgba(109,158,208,.17) 0 4px,transparent 5px),var(--paper);background-size:86px 86px,112px 112px,96px 96px,auto;border:3px solid rgba(97,74,46,.38);border-radius:9px;box-shadow:0 12px 0 rgba(110,83,45,.12),0 22px 45px rgba(75,55,30,.18);isolation:isolate;animation:paperBreath 7s ease-in-out infinite alternate}
+    .paper:before{content:"";position:absolute;inset:0;z-index:-1;opacity:.28;background:repeating-linear-gradient(0deg,transparent 0 27px,#9bc0db 28px 29px)}
+    .tape{position:absolute;top:-9px;left:50%;width:118px;height:31px;transform:translateX(-50%) rotate(-2deg);background:rgba(245,214,111,.56);border:1px solid rgba(145,118,55,.18)}
+    .scribble{position:absolute;z-index:-1;width:80px;height:80px;border:5px solid rgba(232,111,138,.16);border-radius:43% 57% 61% 39%;animation:floatDoodle 6s ease-in-out infinite}
+    .scribble.one{left:-28px;top:28%;transform:rotate(18deg)}
+    .scribble.two{right:-35px;top:56%;width:105px;height:105px;border-color:rgba(85,124,165,.15);animation-delay:-3s}
+    h1{margin:9px 0 3px;text-align:center;font-size:clamp(2rem,8vw,3.25rem);line-height:1;color:#557ca5;letter-spacing:-2px;transform:rotate(-1deg);text-shadow:1px 1px 0 #fff}
+    .intro{margin:10px auto 4px;max-width:400px;text-align:center;font-size:clamp(1rem,4vw,1.18rem);line-height:1.4}
+    #garden{display:block;width:100%;height:360px;touch-action:manipulation}
+    .note{min-height:55px;margin:-8px auto 8px;max-width:390px;text-align:center;font-size:1.1rem;font-weight:700;line-height:1.35;display:grid;place-items:center;transition:opacity .18s,transform .18s}
+    .note.change{opacity:0;transform:translateY(5px)}
+    .controls{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+    button{font:700 1.05rem/1 "Comic Sans MS","Segoe Print",cursive;border:3px solid var(--blue-dark);border-radius:13px;padding:13px 19px;cursor:pointer;color:#fff;background:var(--blue);box-shadow:3px 4px 0 var(--blue-dark);transform:rotate(-1deg);transition:transform .12s,box-shadow .12s}
+    button:hover{transform:rotate(1deg) translateY(-1px);box-shadow:3px 5px 0 var(--blue-dark)}
+    button:active{transform:translate(2px,3px);box-shadow:1px 1px 0 var(--blue-dark)}
+    button:focus-visible{outline:4px solid #f1b94b;outline-offset:4px}
+    button[hidden]{display:none}
+    .counter{margin:15px 0 0;text-align:center;font-size:.9rem;color:#647184}
+    .signature{position:absolute;right:18px;bottom:9px;font-size:.78rem;color:#7b6752;transform:rotate(-3deg)}
+    .final-message{position:absolute;inset:0;z-index:5;display:grid;place-items:center;padding:28px;background:rgba(255,247,220,.86);backdrop-filter:blur(3px);opacity:0;visibility:hidden;transition:opacity .45s,visibility .45s}
+    .final-message.show{opacity:1;visibility:visible}
+    .final-card{max-width:420px;padding:31px 25px;text-align:center;background:#fff8d9;border:4px solid #e58498;border-radius:20px;box-shadow:7px 8px 0 rgba(152,83,97,.25);transform:scale(.72) rotate(-3deg);transition:transform .55s cubic-bezier(.2,1.5,.5,1)}
+    .final-message.show .final-card{transform:scale(1) rotate(1deg)}
+    .final-card p{margin:0;font-size:clamp(1.55rem,7vw,2.3rem);line-height:1.25;color:#496f98;font-weight:700}
+    .final-card small{display:block;margin-top:16px;font-size:1rem;color:#6d5b4e}
+    .final-card button{margin-top:22px;font-size:.95rem}
+    @keyframes paperBreath{to{background-position:8px 6px,-7px 9px,5px -8px,0 0}}
+    @keyframes floatDoodle{0%,100%{translate:0 0;rotate:-3deg}50%{translate:0 -13px;rotate:5deg}}
+    @media(max-height:690px){.paper{min-height:620px;padding-top:25px}#garden{height:290px}.intro{margin-top:5px}}
+    @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;animation:none!important}.note,button,.final-message,.final-card{transition:none!important}}
+  </style>
+</head>
+<body>
+  <main class="paper" aria-labelledby="title">
+    <div class="tape" aria-hidden="true"></div>
+    <div class="scribble one" aria-hidden="true"></div><div class="scribble two" aria-hidden="true"></div>
+    <h1 id="title">Unas flores para ti</h1>
+    <p class="intro">No encontré cómo mandarte un jardín, así que hice uno pequeño.</p>
+    <canvas id="garden" role="img" aria-label="Una maceta vacía esperando flores dibujadas con crayolas"></canvas>
+    <p id="note" class="note" aria-live="polite">Puedes plantar la primera cuando quieras.</p>
+    <div class="controls">
+      <button id="plant" type="button">Plantar una flor</button>
+      <button id="again" type="button" hidden>Empezar otro jardín</button>
+    </div>
+    <p id="counter" class="counter">0 de 5 flores</p>
+    <span class="signature">Para Sayu la dueña de mis quincenas</span>
+    <section id="finalMessage" class="final-message" aria-hidden="true">
+      <div class="final-card">
+        <p>Las próximas que te daré serán reales.</p>
+        <small>Por ahora, estas son especialmente para ti.</small>
+        <button id="closeFinal" type="button">Ver mi jardín</button>
+      </div>
+    </section>
+  </main>
+  <script>
+    const canvas=document.querySelector('#garden'),ctx=canvas.getContext('2d');
+    const plant=document.querySelector('#plant'),again=document.querySelector('#again');
+    const note=document.querySelector('#note'),counter=document.querySelector('#counter');
+    const finalMessage=document.querySelector('#finalMessage'),closeFinal=document.querySelector('#closeFinal');
+    const messages=['Esta apareció porque sí. Como las cosas bonitas.','Esta es para mejorar un poquito tu día.','No quedó perfecta, pero tiene su encanto.','Una más, porque el jardín se veía algo vacío.','Son virtuales, pero la intención sí cuenta.'];
+    const colors=['#e9758d','#f0b83e','#8d79bd','#e96f4e','#6d9ed0'];
+    let flowers=0,dpr=1,w=0,h=0,growth=[],startedAt=0,petals=[];
+    function size(){const r=canvas.getBoundingClientRect();dpr=Math.min(devicePixelRatio||1,2);canvas.width=r.width*dpr;canvas.height=r.height*dpr;w=r.width;h=r.height;ctx.setTransform(dpr,0,0,dpr,0,0);if(flowers===0)draw()}
+    function wobble(n,amount=1.4){return Math.sin(n*7.13+flowers)*amount}
+    function crayonLine(x1,y1,x2,y2,color,width=5){ctx.save();ctx.strokeStyle=color;ctx.lineWidth=width;ctx.lineCap='round';ctx.globalAlpha=.84;for(let i=0;i<3;i++){ctx.beginPath();ctx.moveTo(x1+wobble(i+x1,.8),y1+wobble(i+y1,.7));ctx.quadraticCurveTo((x1+x2)/2+wobble(i+3,2),(y1+y2)/2+wobble(i+5,2),x2+wobble(i+x2,.7),y2+wobble(i+y2,.8));ctx.stroke()}ctx.restore()}
+    function scribbleFill(points,color){ctx.save();ctx.fillStyle=color;ctx.globalAlpha=1;ctx.beginPath();points.forEach((p,i)=>i?ctx.lineTo(...p):ctx.moveTo(...p));ctx.closePath();ctx.fill();ctx.strokeStyle='rgba(75,60,50,.65)';ctx.lineWidth=3;ctx.stroke();ctx.globalAlpha=.23;ctx.strokeStyle='#6b4e36';ctx.lineWidth=1.4;for(let i=0;i<18;i++){let y=points[0][1]+i*4;ctx.beginPath();ctx.moveTo(points[0][0]+i%4,y);ctx.lineTo(points[1][0]-i%5,y+wobble(i,2));ctx.stroke()}ctx.restore()}
+    function pot(){const cx=w/2,top=h-103;scribbleFill([[cx-69,top],[cx+70,top+2],[cx+51,h-31],[cx-48,h-28]],'#d98755');crayonLine(cx-78,top-5,cx+77,top-3,'#9a5b3c',9);ctx.save();ctx.fillStyle='#6d4d38';ctx.globalAlpha=1;ctx.beginPath();ctx.ellipse(cx,top-5,71,12,0,0,Math.PI*2);ctx.fill();ctx.restore()}
+    function leaf(x,y,side){ctx.save();ctx.translate(x,y);ctx.rotate(side*.62);ctx.fillStyle='#75a664';ctx.globalAlpha=.76;ctx.beginPath();ctx.moveTo(0,0);ctx.quadraticCurveTo(side*22,-15,side*36,-4);ctx.quadraticCurveTo(side*19,10,0,0);ctx.fill();ctx.strokeStyle='#4e7d4c';ctx.lineWidth=3;ctx.stroke();ctx.restore()}
+    function flower(i,progress,time){const topSlots=[-.30,-.15,0,.15,.30],rootSlots=[-.065,-.032,0,.032,.065],flowerX=w/2+w*topSlots[i],rootX=w/2+w*rootSlots[i],base=h-56;const target=[105,73,120,86,53][i]*(h/360);const eased=1-Math.pow(1-progress,3);const y=base-(base-target)*eased;const sway=Math.sin(time/850+i*1.7)*2.3*eased;const tipX=rootX+(flowerX-rootX)*eased+sway;crayonLine(rootX,base,tipX,y+25,'#568b54',5);if(progress>.42){const leafX=rootX+(tipX-rootX)*.48;leaf(leafX,base-(base-y)*.43,i%2?1:-1)}if(progress<.72)return;const bloom=Math.min(1,(progress-.72)/.28);ctx.save();ctx.translate(tipX,y);ctx.scale(bloom,bloom);ctx.rotate(wobble(i,.09));for(let p=0;p<6;p++){ctx.save();ctx.rotate(p*Math.PI/3);ctx.fillStyle=colors[i];ctx.globalAlpha=.79;ctx.beginPath();ctx.ellipse(0,-19+wobble(p,.7),12+wobble(p,1),20,0,0,Math.PI*2);ctx.fill();ctx.strokeStyle='rgba(80,55,55,.38)';ctx.lineWidth=2.3;ctx.stroke();ctx.restore()}ctx.fillStyle='#f4bf42';ctx.globalAlpha=.92;ctx.beginPath();ctx.arc(0,0,10.5,0,Math.PI*2);ctx.fill();ctx.strokeStyle='#a67929';ctx.lineWidth=2;ctx.stroke();ctx.restore()}
+    function draw(time=performance.now()){ctx.clearRect(0,0,w,h);for(let i=0;i<flowers;i++){const p=Math.min(1,(time-growth[i])/820);flower(i,Math.max(0,p),time)}pot();petals.forEach(p=>{p.y+=p.speed;p.x+=Math.sin(time/300+p.seed)*.45;ctx.save();ctx.translate(p.x,p.y);ctx.rotate(time/500+p.seed);ctx.fillStyle=p.color;ctx.globalAlpha=Math.max(0,1-p.y/h);ctx.beginPath();ctx.ellipse(0,0,4,8,.5,0,Math.PI*2);ctx.fill();ctx.restore()});petals=petals.filter(p=>p.y<h);if(flowers>0||petals.length)requestAnimationFrame(draw)}
+    function change(text){note.classList.add('change');setTimeout(()=>{note.textContent=text;note.classList.remove('change')},170)}
+    function addFlower(){if(flowers>=5)return;growth.push(performance.now());flowers++;if(flowers===1)requestAnimationFrame(draw);change(messages[flowers-1]);counter.textContent=`${flowers} de 5 flores`;canvas.setAttribute('aria-label',`Una maceta con ${flowers} ${flowers===1?'flor':'flores'} dibujadas con crayolas`);if(flowers===5){plant.hidden=true;again.hidden=false;setTimeout(()=>{for(let i=0;i<28;i++)petals.push({x:Math.random()*w,y:-Math.random()*140,speed:1+Math.random()*1.8,seed:Math.random()*8,color:colors[i%colors.length]});finalMessage.classList.add('show');finalMessage.setAttribute('aria-hidden','false');closeFinal.focus()},1100)}}
+    function reset(){flowers=0;growth=[];petals=[];draw();change('Puedes plantar la primera cuando quieras.');counter.textContent='0 de 5 flores';plant.hidden=false;again.hidden=true;finalMessage.classList.remove('show');finalMessage.setAttribute('aria-hidden','true');canvas.setAttribute('aria-label','Una maceta vacía esperando flores dibujadas con crayolas')}
+    function hideFinal(){finalMessage.classList.remove('show');finalMessage.setAttribute('aria-hidden','true');again.focus()}
+    plant.addEventListener('click',addFlower);again.addEventListener('click',reset);closeFinal.addEventListener('click',hideFinal);window.addEventListener('resize',size);size();
+  </script>
+</body>
+</html>
